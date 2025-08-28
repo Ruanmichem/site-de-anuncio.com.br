@@ -1,0 +1,164 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <title>Site com Login e Redes Sociais</title> 
+  <style> 
+    body { 
+      margin: 0; 
+      font-family: Arial, sans-serif; 
+      background: #f4f4f4; 
+    } 
+    header { 
+      background-color: #333; 
+      color: white; 
+      padding: 20px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    } 
+    .configuracoes { 
+      display: flex; 
+      gap: 10px; 
+    } 
+    .configuracoes input { 
+      padding: 5px; 
+      border: none; 
+      border-radius: 5px; 
+    } 
+    .login-btn { 
+      padding: 5px 10px; 
+      background: #4285F4; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    } 
+    main { 
+      padding: 20px; 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 20px; 
+      justify-content: center; 
+    } 
+    .social-box { 
+      width: 150px; 
+      height: 150px; 
+      background: #ffffff; 
+      border: 2px solid #ccc; 
+      border-radius: 10px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 18px; 
+      cursor: pointer; 
+      transition: 0.3s; 
+    } 
+    .social-box:hover { 
+      background: #e0e0e0; 
+    } 
+    .popup { 
+      display: none; 
+      position: fixed; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      background: white; 
+      padding: 20px; 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.3); 
+      z-index: 1000; 
+    } 
+    .overlay { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.5); 
+      z-index: 999; 
+    } 
+    .popup input { 
+      width: 100%; 
+      padding: 8px; 
+      margin-bottom: 10px; 
+    } 
+    .popup button { 
+      padding: 8px 16px; 
+      background-color: green; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    } 
+    .confirmation { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      background: #4CAF50; 
+      color: white; 
+      padding: 10px 20px; 
+      border-radius: 5px; 
+      display: none; 
+    } 
+  </style> 
+</head> 
+<body> 
+  <header> 
+    <h2>Configurações</h2> 
+    <div class="configuracoes"> 
+      <input type="text" placeholder="Nome"> 
+      <input type="password" placeholder="Senha"> 
+      <button class="login-btn">Conectar com Google</button> 
+    </div> 
+  </header> 
+  <main> 
+    <div class="social-box" data-rede="Facebook">Facebook</div> 
+    <div class="social-box" data-rede="Instagram">Instagram</div> 
+    <div class="social-box" data-rede="Twitter">Twitter</div> 
+    <div class="social-box" data-rede="LinkedIn">LinkedIn</div> 
+    <div class="social-box" data-rede="TikTok">TikTok</div> 
+    <div class="social-box" data-rede="YouTube">YouTube</div> 
+  </main> 
+  <div class="overlay"></div> 
+  <div class="popup"> 
+    <p id="popupTitle">Digite algo para a rede:</p> 
+    <input type="text" id="userInput" placeholder="Escreva aqui..."> 
+    <button onclick="confirmarTexto()">OK</button> 
+  </div> 
+  <div class="confirmation" id="confirmationMsg">Mensagem enviada com sucesso!</div> 
+  <script> 
+    const boxes = document.querySelectorAll('.social-box'); 
+    const popup = document.querySelector('.popup'); 
+    const overlay = document.querySelector('.overlay'); 
+    const popupTitle = document.getElementById('popupTitle'); 
+    const confirmation = document.getElementById('confirmationMsg'); 
+    let redeAtual = ''; 
+    boxes.forEach(box => { 
+      box.addEventListener('click', () => { 
+        redeAtual = box.dataset.rede; 
+        popupTitle.textContent = `Digite algo para o ${redeAtual}:`; 
+        popup.style.display = 'block'; 
+        overlay.style.display = 'block'; 
+        document.getElementById('userInput').value = ''; 
+      }); 
+    }); 
+    function confirmarTexto() { 
+      const valor = document.getElementById('userInput').value; 
+      if (valor.trim() === '') return; 
+      popup.style.display = 'none'; 
+      overlay.style.display = 'none'; 
+      confirmation.textContent = `Mensagem enviada para ${redeAtual}: "${valor}"`; 
+      confirmation.style.display = 'block'; 
+      setTimeout(() => { 
+        confirmation.style.display = 'none'; 
+      }, 3000); 
+} 
+overlay.addEventListener('click', () => { 
+popup.style.display = 'none'; 
+overlay.style.display = 'none'; 
+}); 
+</script> 
+</body> 
+</html>
